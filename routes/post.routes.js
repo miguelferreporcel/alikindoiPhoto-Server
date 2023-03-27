@@ -4,7 +4,7 @@
  */
 
 import {Router} from 'express'
-import {getPosts, createPosts, updatePosts, deletePosts, getPost} from '../controllers/post.controllers.js'
+import {getPosts, createPosts, updatePosts, deletePosts, getPost} from '../controllers/post.controller.js'
 
 const router = Router()
 

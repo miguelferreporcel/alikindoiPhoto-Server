@@ -1,8 +1,8 @@
 // Definición de la estructura y propiedades de los datos de una publicación ('Post') para su almacenmiento y uso
 
-import mongoose from "mongoose"
+import { Schema, model} from "mongoose"
 
-const postSchema = new mongoose.Schema({
+const postSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -19,4 +19,4 @@ const postSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('Post', postSchema)
+export default model('Post', postSchema)

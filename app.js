@@ -26,7 +26,7 @@ app.use(fileUpload({
 }))
 
 // routes
-app.use(postsRoutes)
+app.use(postsRoutes) 
 
 // El server también servirá el client
 app.use(express.static(join(__dirname, '../client/build')))
