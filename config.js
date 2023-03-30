@@ -1,5 +1,5 @@
 /**
- * Dotenv es un módulo de dependencia cero que carga variables de entorno desde un archivo .env en process.env. 
+ * dotenv es un módulo de dependencia cero que carga variables de entorno desde un archivo .env en process.env. 
  * Almacenamiento de configuración en el entorno separado del código
  * Si no existen las variables de entorno se asignan valores por defecto par su ejecución
  */
