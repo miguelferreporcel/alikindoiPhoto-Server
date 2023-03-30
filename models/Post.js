@@ -17,6 +17,10 @@ const postSchema = new Schema({
         url: String,
         public_id: String
     }
+}, {    
+    timestamps: true,
+    versionKey: false
+        
 })
 
 export default model('Post', postSchema)
