@@ -9,12 +9,15 @@ import fileUpload from 'express-fileupload'
 import postsRoutes from './routes/post.routes.js'
 import authRoutes from './routes/auth.routes.js'
 
+import { createRoles } from './libs/initialSetup.js'
+
 // Crear variable __dirname
 import { dirname, join } from 'path'
 import { fileURLToPath, pathToFileURL } from 'url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const app = express()
+createRoles()
 
 // midlewares
 app.use(express.json())
