@@ -10,4 +10,5 @@ dotenv.config()
 export const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/testdb"
 export const PORT = process.env.port || 4000
 
-export const JWT_SECRET = process.env.JWT_SECRET
+export const JWT_ACCESS = process.env.JWT_ACCESS
+export const JWT_REFRESH = process.env.JWT_REFRESH
