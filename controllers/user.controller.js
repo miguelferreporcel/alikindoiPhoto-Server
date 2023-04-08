@@ -98,3 +98,15 @@ export const deleteUser =  async(req, res) => {
     console.error(error)
   }  
 }
+
+// listar un único usuario por ID (Post.findById(req.params.id))
+export const getUser = async(req, res) => {
+  try{
+      const userFound = await User.findById(req.params.id)
+      if (!userFound) return res.sendStatus(404)
+      return res.json(userFound)    
+  }catch (error){        
+      console.error(error.message)
+      return res.status(500).json({message: error.message})        
+  }
+}

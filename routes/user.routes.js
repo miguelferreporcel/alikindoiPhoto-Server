@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createUser, deleteUser, getUsers, updateUser } from "../controllers/user.controller.js"
+import { createUser, deleteUser, getUsers, updateUser, getUser } from "../controllers/user.controller.js"
 import { verifyToken, isAdmin } from '../middlewares/verifyAuth.js'
 
 const router = Router()
@@ -11,6 +11,9 @@ router.post('/users', /* isAdmin, */ createUser)
 router.put('/users/:id', updateUser)
 
 router.delete('/users/:id', /* isAdmin, */ deleteUser)
+
+// Devuelve un único usuario
+router.get('/users/:id', getUser) 
 
 export default router
 
