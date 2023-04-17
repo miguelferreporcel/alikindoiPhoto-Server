@@ -6,7 +6,6 @@ const userSchema = new Schema({
         type: String,
         unique: true,
         required: true,
-        trim: true,
         min: 3,
         max: 20
     },
@@ -28,8 +27,8 @@ const userSchema = new Schema({
     posts: [{
         ref: "Post", 
         type: Schema.Types.ObjectId
-    }]
-    
+    }],
+    refreshToken: String,    
 }, {
     timestamps: true,
     versionKey: false

@@ -18,3 +18,18 @@ router.delete('/users/:id', /* verifyToken, isAdmin, */ deleteUser)
 router.get('/users/:id', /* verifyToken, */ getUser) 
 
 export default router
+
+/* const express = require('express');
+const router = express.Router();
+const usersController = require('../../controllers/usersController');
+const ROLES_LIST = require('../../config/roles_list');
+const verifyRoles = require('../../middleware/verifyRoles');
+
+router.route('/users')
+    .get(verifyRoles(ROLES_LIST.admin), usersController.getUsers)
+    .post(verifyRoles(ROLES_LIST.admin), usersController.createUser);
+
+router.route('/users/:id')
+    .get(verifyRoles(ROLES_LIST.admin), usersController.getUser);
+    .put(verifyRoles(ROLES_LIST.admin), usersController.updateUser);
+    .delete(verifyRoles(ROLES_LIST.admin), usersController.deleteUser) */

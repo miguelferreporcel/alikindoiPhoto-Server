@@ -2,7 +2,7 @@ import User from "../models/User.js"
 import Role from "../models/Role.js"
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { JWT_ACCESS, JWT_REFRESH } from "../config.js"
+import { JWT_ACCESS, JWT_REFRESH } from "../config/config.js"
 
 
 

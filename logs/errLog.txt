@@ -1,0 +1,5 @@
+17/04/2023	18:44:30	94da431d-fd87-45d4-a280-66e7f8079a5e	Error: Not allowed by CORS
+17/04/2023	18:45:51	aee57ad0-b9c2-4e72-b77b-7e09b33bc67f	Error: Not allowed by CORS
+17/04/2023	18:46:22	74f2f363-dcea-48c7-b1b5-04aa4c2d304e	Error: Not allowed by CORS
+17/04/2023	19:22:59	7e7afbfd-9771-41e6-9e0d-a03d09a533cf	Error: Not allowed by CORS
+17/04/2023	19:25:37	117b76cb-0337-4535-b809-7c24391d0e35	Error: Not allowed by CORS
