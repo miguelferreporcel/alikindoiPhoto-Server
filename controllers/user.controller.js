@@ -1,21 +1,16 @@
+import Role from "../models/Role.js"
 import User from "../models/User.js"
 import bcrypt from 'bcryptjs'
 
 
 export const createUser = async (req, res) => {
-  const {username, email, password/* , roles */} = req.body
+  const {username, email, password , roles } = req.body
   try {
     // Confirm data
     if (!username ||!email || !password ) {
       return res.status(400).json({ message: 'All fields are required' })
     }
-
-    // Check for duplicate username
-    const userDupli = await User.findOne({username: req.body.username})
-    const emailDupli = await User.findOne({email: req.body.email})
-    if (userDupli) return res.status(400).json({message: `The user ${userDupli.username} already exists `})
-    if (emailDupli) return res.status(400).json({message: `The email ${emailDupli.email} already exists `})
-
+    
     // Hash password 
     const salt = 10
     const passwordHash = await bcrypt.hash(password, salt)  
@@ -24,8 +19,17 @@ export const createUser = async (req, res) => {
     const newUser = new User({
       username,
       email,
-      password: passwordHash
+      password: passwordHash,
+      roles
     })
+
+    if(roles) {
+      const foundRoles = await Role.find({name: {$in: roles}})
+      newUser.roles = foundRoles.map(role => role._id) 
+    } else {
+      const role = await Role.findOne({name: 'user'})
+      newUser.roles = [role._id]
+    } 
 
     // store new user
     const savedUser = await newUser.save()
@@ -62,7 +66,8 @@ export const getUsers =  async (req, res) => {
 export const updateUser =  async (req, res) => {
 
   try{
-    const { username, email, password } = req.body
+    const { username, email, password, roles } = req.body
+    console.log(req.body)
     
     // Hash password 
     const salt = 10
@@ -73,16 +78,17 @@ export const updateUser =  async (req, res) => {
     const updateUser = {
       username,
       email,
-      password: passwordHash
+      password: passwordHash,
+      roles
     }
 
-    console.log(updateUser)
+    console.log('updateUser:' + updateUser.username)
 
     // Store user
     const userUpdated = await User.findByIdAndUpdate({ _id: req.params.id }, updateUser, { new: true})
-    return res.json(userUpdated)
+    return res.json({message: 'El usuario ' + userUpdated.username + ' se ha actualizado'})
   }catch (error){
-    return res.status(500).json({message: error.message})
+    return res.status(500).json('El usuario ' + updateUser.username + ' no se ha actualizado' + {message: error.message})
   } 
 }
 
@@ -103,10 +109,9 @@ export const deleteUser =  async(req, res) => {
 export const getUser = async(req, res) => {
   try{
       const userFound = await User.findById(req.params.id)
-      if (!userFound) return res.sendStatus(404)
-      return res.json(userFound)    
-  }catch (error){        
-      console.error(error.message)
+      if (!userFound) return res.sendStatus(404).json({message: 'User not found'})
+      return res.json(userFound).status(200)    
+  }catch (error){
       return res.status(500).json({message: error.message})        
   }
 }

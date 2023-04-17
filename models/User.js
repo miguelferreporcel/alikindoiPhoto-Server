@@ -1,4 +1,4 @@
-import { Schema, model, SchemaType} from "mongoose"
+import { Schema, model } from "mongoose"
 
 
 const userSchema = new Schema({
@@ -6,7 +6,9 @@ const userSchema = new Schema({
         type: String,
         unique: true,
         required: true,
-        trim: true
+        trim: true,
+        min: 3,
+        max: 20
     },
     email: {
         type: String,
@@ -15,7 +17,9 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        min: 5,
+        max: 20
     },
     roles: [{
         ref: "Role", 

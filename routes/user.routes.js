@@ -1,37 +1,20 @@
 import { Router } from "express"
 import { createUser, deleteUser, getUsers, updateUser, getUser } from "../controllers/user.controller.js"
 import { verifyToken, isAdmin } from '../middlewares/verifyAuth.js'
+import { checkRoleExisted } from '../middlewares/verifySignup.js'
+import { checkDuplicateUsernameOrEmail } from '../middlewares/verifySignup.js'
 
 const router = Router()
 
-router.get('/users', /* isAdmin, */ getUsers)
+router.get('/users', /* verifyToken, isAdmin, */ getUsers)
 
-router.post('/users', /* isAdmin, */ createUser)
+router.post('/users', /* verifyToken, isAdmin, */ /* checkRoleExisted, */ checkDuplicateUsernameOrEmail, createUser)
 
-router.put('/users/:id', updateUser)
+router.put('/users/:id', /* verifyToken, checkRoleExisted, */ /* checkDuplicateUsernameOrEmail, */ updateUser)
 
-router.delete('/users/:id', /* isAdmin, */ deleteUser)
+router.delete('/users/:id', /* verifyToken, isAdmin, */ deleteUser)
 
 // Devuelve un único usuario
-router.get('/users/:id', getUser) 
+router.get('/users/:id', /* verifyToken, */ getUser) 
 
 export default router
-
-
-/* router.get('/users', [
-  verifyAuth.verifyToken, 
-  verifyAuth.isAdmin
-], getUsers)
-router.post('/users', [
-  verifyAuth.verifyToken, 
-  verifyAuth.isAdmin, 
-  verifySignup.checkRoleExisted
-], createUser)
-router.put('/users/:id', [
-  verifyAuth.verifyToken, 
-  verifyAuth.isAdmin
-], updateUser)
-router.delete('/users/:id', [
-  verifyAuth.verifyToken, 
-  verifyAuth.isAdmin
-], deleteUser) */
