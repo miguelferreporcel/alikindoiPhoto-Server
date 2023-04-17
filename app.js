@@ -12,6 +12,7 @@ import userRoutes from './routes/user.routes.js'
 
 import { createRoles } from './libs/initialSetup.js'
 import { logger } from './middlewares/logEvents.js'
+/* import { errorHandler } from './middlewares/errorHandler.js' */
 
 import morgan from 'morgan'
 
@@ -21,6 +22,7 @@ createRoles()
 // midlewares
 app.use(morgan('dev'))
 app.use(logger)
+/* app.use(errorHandler) */
 app.use(express.json())
 app.use(fileUpload({
     

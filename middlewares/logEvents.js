@@ -4,14 +4,13 @@ import fs from 'fs'
 import { promises as fsPromises } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-// Crear variable __dirname
-import { dirname } from 'path'
 
+// Crear variable __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
 
 export const logEvents = async (message, logName) => {
-    const dateTime = `${format(new Date(), 'yyyyMMdd\tHH:mm:ss')}`;
+    const dateTime = `${format(new Date(), 'dd/MM/yyyy\tHH:mm:ss')}`;
     const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
 
     try {

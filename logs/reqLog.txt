@@ -1,1 +1,4 @@
-20230417	13:36:17	ef9d48ff-45c6-40c3-8a66-c78f623c1915	POST	undefined	/login
+17/04/2023	14:26:14	0098d9cb-93ae-4143-8a9f-ea459fd41ce0	GET	undefined	/posts
+17/04/2023	14:26:14	966a926d-0fb0-4af2-b6c5-de207e44660c	GET	undefined	/users
+17/04/2023	14:26:14	764a71cd-9063-4afb-8f68-95dc8f1e41c5	GET	undefined	/posts
+17/04/2023	14:26:14	483101b6-2479-4d3e-bc26-1e915e9e5f3b	GET	undefined	/users
