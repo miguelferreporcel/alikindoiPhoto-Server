@@ -78,8 +78,6 @@ export const login = async (req, res) => {
   // Saving refreshToken with current user
   userFound.refreshToken = refreshToken
   const result = await userFound.save()
-  console.log(result),
-  console.log(userFound.roles)
 
   // Create secure cookie with refresh token 
   res.cookie('jwt', refreshToken, {
@@ -88,7 +86,7 @@ export const login = async (req, res) => {
     sameSite: 'Lax', //cross-site cookie 
     maxAge: 24 * 60 * 60 * 1000 //cookie expires 1 day
   })
-  console.log(userFound)
+  
   res.status(200).json({message: 'Successfully Logged In', accessToken, userFound, /* refreshToken */})
   } catch (error) {
     console.error({message: 'No login success'}, error)

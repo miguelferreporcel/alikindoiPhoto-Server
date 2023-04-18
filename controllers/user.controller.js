@@ -67,7 +67,6 @@ export const updateUser =  async (req, res) => {
 
   try{
     const { username, email, password, roles } = req.body
-    console.log(req.body)
     
     // Hash password 
     const salt = 10
