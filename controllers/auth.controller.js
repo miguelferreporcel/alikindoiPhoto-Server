@@ -56,21 +56,19 @@ export const login = async (req, res) => {
   }
   const matchPassword = await comparePassword(req.body.password, userFound.password)
   if(!matchPassword) return res.status(400).json({message: 'Invalid email or password'})
-
   const accessToken = jwt.sign(
     { 
-      id: userFound._id,
-      username: userFound.username
-     }, 
+      username: userFound.username,
+      roles: userFound.roles
+    }, 
     JWT_ACCESS, 
     { expiresIn: '15m' }
   )
 
   const refreshToken = jwt.sign(
-    { 
-      id: userFound._id,
+    {
       username: userFound.username
-     },
+    },
     JWT_REFRESH,
     { expiresIn: '7d' }
   )
@@ -87,7 +85,7 @@ export const login = async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000 //cookie expires 1 day
   })
   
-  res.status(200).json({message: 'Successfully Logged In', accessToken, userFound, /* refreshToken */})
+  res.status(200).json({message: 'Successfully Logged In', accessToken, userFound})
   } catch (error) {
     console.error({message: 'No login success'}, error)
   }
