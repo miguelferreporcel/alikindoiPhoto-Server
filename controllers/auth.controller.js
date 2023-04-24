@@ -47,45 +47,69 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const userFound = await User.findOne({email: req.body.email}).populate('roles')
+    const userFound = await User.findOne({ email: req.body.email }).populate(
+      "roles"
+    );
 
-  if(!userFound) return res.status(400).json({message: 'Invalid email or password'})
-  
-  const comparePassword = async (password, receivedPassword) => {
-    return await bcrypt.compare(password, receivedPassword)
-  }
-  const matchPassword = await comparePassword(req.body.password, userFound.password)
-  if(!matchPassword) return res.status(400).json({message: 'Invalid email or password'})
-  const accessToken = jwt.sign(
-    { 
-      username: userFound.username,
-      roles: userFound.roles
-    }, 
-    JWT_ACCESS, 
-    { expiresIn: '15m' }
-  )
+    if (!userFound)
+      return res.status(400).json({ message: "Invalid email or password" });
 
-  const refreshToken = jwt.sign(
-    {
-      username: userFound.username
-    },
-    JWT_REFRESH,
-    { expiresIn: '7d' }
-  )
+    const comparePassword = async (password, receivedPassword) => {
+      return await bcrypt.compare(password, receivedPassword);
+    };
+    const matchPassword = await comparePassword(
+      req.body.password,
+      userFound.password
+    );
+    if (!matchPassword)
+      return res.status(400).json({ message: "Invalid email or password" });
+    const accessToken = jwt.sign(
+      {
+        id: userFound._id,
+      },
+      JWT_ACCESS,
+      { expiresIn: "15m" }
+    );
 
-  // Saving refreshToken with current user
-  userFound.refreshToken = refreshToken
-  const result = await userFound.save()
+    const refreshToken = jwt.sign(
+      {
+        id: userFound._id,
+      },
+      JWT_REFRESH,
+      { expiresIn: "7d" }
+    );
 
-  // Create secure cookie with refresh token 
-  res.cookie('jwt', refreshToken, {
-    httpOnly: true, //accessible only by web server 
-    /* secure: true, //https */
-    sameSite: 'Lax', //cross-site cookie 
-    maxAge: 24 * 60 * 60 * 1000 //cookie expires 1 day
-  })
-  
-  res.status(200).json({message: 'Successfully Logged In', accessToken, userFound})
+    // Saving refreshToken with current user
+    userFound.refreshToken = refreshToken;
+    const result = await userFound.save();
+
+    // Create secure cookie with refresh token
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true, //accessible only by web server
+      /* secure: true, //https */
+      sameSite: "Lax", //cross-site cookie
+      maxAge: 24 * 60 * 60 * 1000, //cookie expires 1 day
+    });
+
+    
+      const authorities = [];
+
+      for (let i = 0; i < userFound.roles.length; i++) {
+        authorities.push('ROLES: ' + userFound.roles[i].name);
+      }
+      res.status(200).send({
+        message: "Successfully Logged In",
+        id: userFound._id,
+        username: userFound.username,
+        email: userFound.email,
+        roles: authorities,
+        accessToken: accessToken, // access token
+      });
+   
+
+    /* res
+      .status(200)
+      .json({ message: "Successfully Logged In", accessToken, userFound }); */
   } catch (error) {
     console.error({message: 'No login success'}, error)
   }
