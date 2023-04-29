@@ -49,14 +49,24 @@ export const createUser = async (req, res) => {
 // listar (find() -> obtener) todos los usuarios. 
 export const getUsers =  async (req, res) => {
   try {
-    // Get all users from MongoDB
-    const users = await User.find().select('-password').lean()
+      // Get all users from MongoDB
+      const users = await User.find()
+          .populate("roles", "name")
+          .populate("posts", "title")
+          .select("-password")
+          .lean();
 
-    // If no users 
-    if (!users?.length) {
-      return res.status(400).json({ message: 'No users found' })
-    }
-    res.json(users) 
+      // If no users
+      if (!users?.length) {
+          return res.status(400).json({ message: "No users found" });
+      }
+      // Map over users array and replace role ID with role name
+      const usersWithRoleNames = users.map((user) => {
+          const roles = user.roles.map((role) => role.name);
+          return { ...user, roles };
+      });
+
+      res.json(usersWithRoleNames);
   } catch (error) {
     console.error(error)
   }   
